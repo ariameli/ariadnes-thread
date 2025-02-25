@@ -21,6 +21,7 @@
 - [aframe-blink-controls](https://github.com/jure/aframe-blink-controls) (MIT License)
 - [aframe-multi-camera](https://github.com/diarmidmackenzie/aframe-multi-camera/) (MIT License)
 - [simple-navmesh-constraint](https://github.com/AdaRoseCannon/aframe-xr-boilerplate) (MIT Licence)
+- ["Minoic Labyrinth"](https://skfb.ly/oKKTy) by Bruno Macchioni is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 
 ### Movement modes support
 
