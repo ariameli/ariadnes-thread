@@ -34,6 +34,14 @@ function collisionEnd(event) {
   }
   ropeIsTouched.value = false;
 }
+function ropeAppears() {
+  console.log("Rope bundle touched!");
+  const rope = document.getElementById("rope");
+  if (rope) {
+    rope.setAttribute("visible", true);
+    document.getElementById("rope-bundle").setAttribute("visible", false);
+  }
+}
 </script>
 
 <template>
@@ -59,15 +67,21 @@ function collisionEnd(event) {
     <a-assets @loaded="allAssetsLoaded = true">
       <!--  The rope -->
       <a-asset-item
-        id="rope-model"
-        src="assets/models/rope3d.glb"
+        id="rope-bundle-model"
+        src="assets/models/rope_bundle.glb"
       ></a-asset-item>
       <!-- The maze -->
       <a-asset-item id="maze-model" src="assets/models/maze.glb"></a-asset-item>
+      <!-- The torches -->
+      <a-asset-item
+        id="torch-model"
+        src="assets/models/burning_torch.glb"
+      ></a-asset-item>
     </a-assets>
 
     <template v-if="allAssetsLoaded">
       <!-- cylinder that looks like a rope -->
+
       <a-cylinder
         obb-collider
         id="rope"
@@ -77,23 +91,10 @@ function collisionEnd(event) {
         height="3"
         @obbcollisionstarted="collisionStart($event)"
         @obbcollisionended="collisionEnd($event)"
+        visible="false"
         clickable
       ></a-cylinder>
-
-      <!-- The rope
-      <a-entity
-        geometry="primitive: cylinder; radius: 0.02; height: 2"
-        material="color: gold"
-        position=" 1 -3"
-        rotation="90 0 0"
-      ></a-entity>           -->
-      <!-- The labyrinth -->
-      <!-- <a-entity
-        id="scene"
-        gltf-model="#scene-model"
-        position="-17.3 -1 -2"
-        scale="1 1 1"
-      ></a-entity> -->
+      <!-- The maze -->
       <a-entity
         id="maze"
         gltf-model="#maze-model"
@@ -101,16 +102,34 @@ function collisionEnd(event) {
         rotation="0 90 0"
         scale="0.7 0.7 0.7"
       ></a-entity>
-      <!-- The rope -->
-      <!-- <a-entity
-        id="rope"
-        gltf-model="#rope-model"
-        position="0 0.5 -3"
-        rotation="0 90 0"
-        scale="0.025 0.025 0.025"
-        simple-grab
+      <!-- The rope bundle -->
+      <a-entity
+        id="rope-bundle"
+        gltf-model="#rope-bundle-model"
+        position="0 0.4 -0.9"
+        rotation="0 0 0"
+        scale="1.8 1.8 1.8"
+        visible="true"
+        @obbcollisionstarted="ropeAppears()"
+        obb-collider
         clickable
-      ></a-entity> -->
+      ></a-entity>
+      <a-entity
+        light="type: point; intensity: 1.5; color: #FF8141"
+        position="0 0.6 -0.9"
+      ></a-entity>
+      <!-- torches -->
+      <a-entity
+        id="torch-1"
+        gltf-model="#torch-model"
+        position="-0.9 1.3 -2"
+        rotation="0 0 0"
+        scale="0.08 0.08 0.08"
+      ></a-entity>
+      <a-entity
+        light="type: point; intensity: 1.5; color: #FF8141"
+        position="-0.9 2 -1.8"
+      ></a-entity>
     </template>
 
     <TheCameraRig :collided="ropeIsTouched" />
