@@ -57,20 +57,13 @@ function collisionEnd(event) {
     simple-grab
   >
     <a-assets @loaded="allAssetsLoaded = true">
-      <!-- The labyrinth -->
-      <a-asset-item
-        id="scene-model"
-        src="assets/models/minoic_labyrinth.glb"
-      ></a-asset-item>
       <!--  The rope -->
       <a-asset-item
         id="rope-model"
         src="assets/models/rope3d.glb"
       ></a-asset-item>
-      <a-asset-item
-        id="labyrinth-model"
-        src="assets/models/labyrinth.glb"
-      ></a-asset-item>
+      <!-- The maze -->
+      <a-asset-item id="maze-model" src="assets/models/maze.glb"></a-asset-item>
     </a-assets>
 
     <template v-if="allAssetsLoaded">
@@ -102,11 +95,11 @@ function collisionEnd(event) {
         scale="1 1 1"
       ></a-entity> -->
       <a-entity
-        id="labyrinth"
-        gltf-model="#labyrinth-model"
-        position="-1 0 -12"
-        rotation="0 180 0"
-        scale="1 1 1"
+        id="maze"
+        gltf-model="#maze-model"
+        position="0 -2.4 -26"
+        rotation="0 90 0"
+        scale="0.7 0.7 0.7"
       ></a-entity>
       <!-- The rope -->
       <!-- <a-entity
@@ -118,10 +111,6 @@ function collisionEnd(event) {
         simple-grab
         clickable
       ></a-entity> -->
-      <a-sky
-        src="https://c7.staticflickr.com/1/661/21230969582_37cee367bd_k.jpg"
-      >
-      </a-sky>
     </template>
 
     <TheCameraRig :collided="ropeIsTouched" />
