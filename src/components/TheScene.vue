@@ -17,23 +17,24 @@ defineProps({
 
 const allAssetsLoaded = ref(false);
 const ropeIsTouched = ref(false);
+const lightBundleofRope = ref(false);
 
-function collisionStart(event) {
-  console.log("Hand touched the rope!", event.detail);
+//after 5 seconds change the lightBundkeofRope to true
+setTimeout(() => {
+  lightBundleofRope.value = true;
+}, 5000);
+
+function handleCollision(event, isCollisionStart) {
   const rope = document.getElementById("rope");
   if (rope) {
-    rope.setAttribute("material", "color: red");
-    ropeIsTouched.value = true;
+    rope.setAttribute(
+      "material",
+      isCollisionStart ? "color: red" : "color: white"
+    );
+    ropeIsTouched.value = isCollisionStart;
   }
 }
-function collisionEnd(event) {
-  console.log("Hand left the rope!", event.detail);
-  const rope = document.getElementById("rope");
-  if (rope) {
-    rope.setAttribute("material", "color: white");
-  }
-  ropeIsTouched.value = false;
-}
+
 function ropeAppears() {
   console.log("Rope bundle touched!");
   const rope = document.getElementById("rope");
@@ -77,6 +78,10 @@ function ropeAppears() {
         id="torch-model"
         src="assets/models/burning_torch.glb"
       ></a-asset-item>
+      <a-asset-item
+        id="torch-anim"
+        src="assets/models/torch_anim.glb"
+      ></a-asset-item>
     </a-assets>
 
     <template v-if="allAssetsLoaded">
@@ -85,28 +90,29 @@ function ropeAppears() {
       <a-cylinder
         obb-collider
         id="rope"
-        position="-0.1 1 -2"
+        position="0 1.3 -1.7"
         rotation="90 0 0"
         radius="0.03"
         height="3"
-        @obbcollisionstarted="collisionStart($event)"
-        @obbcollisionended="collisionEnd($event)"
-        visible="false"
+        @obbcollisionstarted="handleCollision($event, true)"
+        @obbcollisionended="handleCollision($event, false)"
+        visible="true"
         clickable
       ></a-cylinder>
+
       <!-- The maze -->
       <a-entity
         id="maze"
         gltf-model="#maze-model"
-        position="0 -2.4 -26"
+        position="0 -1.8 -18.3"
         rotation="0 90 0"
-        scale="0.7 0.7 0.7"
+        scale="0.5 0.5 0.5"
       ></a-entity>
       <!-- The rope bundle -->
       <a-entity
         id="rope-bundle"
         gltf-model="#rope-bundle-model"
-        position="0 0.4 -0.9"
+        position="0 0.15 -0.9"
         rotation="0 0 0"
         scale="1.8 1.8 1.8"
         visible="true"
@@ -115,21 +121,44 @@ function ropeAppears() {
         clickable
       ></a-entity>
       <a-entity
-        light="type: point; intensity: 1.5; color: #FF8141"
-        position="0 0.6 -0.9"
+        :visible="lightBundleofRope"
+        light="type: point; intensity: 4; color: #FF8141"
+        position="0 0.4 -0.9"
       ></a-entity>
       <!-- torches -->
       <a-entity
         id="torch-1"
-        gltf-model="#torch-model"
-        position="-0.9 1.3 -2"
-        rotation="0 0 0"
+        gltf-model="#torch-anim"
+        position="-0.65 1.3 -1"
         scale="0.08 0.08 0.08"
-      ></a-entity>
+        animation-mixer
+        ><a-entity
+          light="type: point; intensity: 1; color: #fcba03"
+          position="2 11 0"
+        ></a-entity>
+      </a-entity>
       <a-entity
-        light="type: point; intensity: 1.5; color: #FF8141"
-        position="-0.9 2 -1.8"
-      ></a-entity>
+        id="torch-2"
+        gltf-model="#torch-anim"
+        position="0.65 1.3 -5"
+        scale="0.08 0.08 0.08"
+        animation-mixer
+        ><a-entity
+          light="type: point; intensity: 1; color: #fcba03"
+          position="-2 11 0"
+        ></a-entity>
+      </a-entity>
+      <a-entity
+        id="torch-3"
+        gltf-model="#torch-anim"
+        position="-0.65 1.3 -9"
+        scale="0.08 0.08 0.08"
+        animation-mixer
+        ><a-entity
+          light="type: point; intensity: 1; color: #fcba03"
+          position="2 11 0"
+        ></a-entity>
+      </a-entity>
     </template>
 
     <TheCameraRig :collided="ropeIsTouched" />

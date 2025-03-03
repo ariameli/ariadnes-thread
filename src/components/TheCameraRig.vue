@@ -53,8 +53,6 @@ const props = defineProps({
     >
       <a-sphere
         id="hand-left-collider"
-        obb-collider
-        :track-me="`target: #camera-rig; enable: ${collided}`"
         radius="0.02"
         visible="false"
         physx-body="type: kinematic; emitCollisionEvents: true"
@@ -70,7 +68,6 @@ const props = defineProps({
       position="0 1.5 0"
       physx-grab
     >
-      <!-- HERE how can i use the collided boolean from the defienProps for enable ?-->
       <a-sphere
         :track-me="`target: #camera-rig; enable: ${collided}`"
         obb-collider
