@@ -36,12 +36,40 @@ function handleCollision(event, isCollisionStart) {
 }
 
 function ropeAppears() {
-  console.log("Rope bundle touched!");
   const rope = document.getElementById("rope");
+  const ropeBundle = document.getElementById("rope-bundle");
   if (rope) {
     rope.setAttribute("visible", true);
-    document.getElementById("rope-bundle").setAttribute("visible", false);
+    ropeBundle.setAttribute("visible", false);
   }
+}
+
+function ropeVisibility(visibility) {
+  const rope = document.getElementById("rope");
+  if (rope) {
+    rope.setAttribute("visible", visibility);
+  }
+  const pinkSphere = document.getElementById("pink-sphere");
+  const blueSphere = document.getElementById("blue-sphere");
+  const purpleSphere = document.getElementById("purple-sphere");
+  if (pinkSphere) {
+    animateForward(pinkSphere, { x: 0, y: 1.3, z: -8 });
+  }
+  if (blueSphere) {
+    animateForward(blueSphere, { x: -0.2, y: 1.3, z: -7.7 });
+  }
+  if (purpleSphere) {
+    animateForward(purpleSphere, { x: 0.2, y: 1.3, z: -7.7 });
+  }
+}
+
+// function thats ANIMATES an object to move forward by giving him a new position as argument
+function animateForward(object, newPosition) {
+  object.setAttribute("animation", {
+    property: "position",
+    to: newPosition,
+    dur: 1000,
+  });
 }
 </script>
 
@@ -90,16 +118,49 @@ function ropeAppears() {
       <a-cylinder
         obb-collider
         id="rope"
-        position="0 1.3 -1.7"
+        position="0 1.3 -3.3"
         rotation="90 0 0"
         radius="0.03"
-        height="3"
+        height="7"
         @obbcollisionstarted="handleCollision($event, true)"
         @obbcollisionended="handleCollision($event, false)"
         visible="true"
         clickable
       ></a-cylinder>
 
+      <!-- make a very bright light that looks like its floating right in front of the box -->
+      <a-sphere
+        id="pink-sphere"
+        position="0 1.3 -9.5"
+        radius="0.1"
+        color="pink"
+        shader="flat"
+        emit-when-near="event: rope-visibility; distance: 3;"
+        @rope-visibility="ropeVisibility(false)"
+      >
+        <a-light type="point" intensity="0.1" color="pink" position="0 0 0">
+        </a-light>
+      </a-sphere>
+      <a-sphere
+        id="blue-sphere"
+        position="-0.8 1.3 -7.7"
+        radius="0.1"
+        color="blue"
+        shader="flat"
+      >
+        <a-light type="point" intensity="0.1" color="blue" position="0 0 0">
+        </a-light>
+      </a-sphere>
+      <a-sphere
+        id="purple-sphere"
+        position="0.8 1.3 -7.7"
+        radius="0.1"
+        color="purple"
+        shader="flat"
+      >
+        <a-light type="point" intensity="0.1" color="purple" position="0 0 0">
+        </a-light>
+      </a-sphere>
       <!-- The maze -->
       <a-entity
         id="maze"
