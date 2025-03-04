@@ -9,6 +9,7 @@ import "../aframe/listen-to.js";
 import "../aframe/simple-grab.js";
 import "../aframe/clickable.js";
 import "../aframe/track-me.js";
+import "../aframe/bloom.js";
 
 defineProps({
   scale: Number,
@@ -44,31 +45,36 @@ function ropeAppears() {
   }
 }
 
-function ropeVisibility(visibility) {
+function ropeVisibility() {
   const rope = document.getElementById("rope");
   if (rope) {
-    rope.setAttribute("visible", visibility);
+    rope.remove();
+    console.log("rope removed");
   }
-  const pinkSphere = document.getElementById("pink-sphere");
-  const blueSphere = document.getElementById("blue-sphere");
-  const purpleSphere = document.getElementById("purple-sphere");
-  if (pinkSphere) {
-    animateForward(pinkSphere, { x: 0, y: 1.3, z: -8 });
-  }
-  if (blueSphere) {
-    animateForward(blueSphere, { x: -0.2, y: 1.3, z: -7.7 });
-  }
-  if (purpleSphere) {
-    animateForward(purpleSphere, { x: 0.2, y: 1.3, z: -7.7 });
+  animateSpheres();
+}
+
+function animateSpheres() {
+  animateForward("pink-sphere", { x: 0, y: 1.3, z: -7.3 });
+  animateForward("blue-sphere", { x: -0.25, y: 1.3, z: -7 });
+  animateForward("purple-sphere", { x: 0.25, y: 1.3, z: -7 });
+}
+
+function animateForward(id, newPosition) {
+  const object = document.getElementById(id);
+  if (object) {
+    object.setAttribute("animation", {
+      property: "position",
+      to: newPosition,
+      dur: 1000,
+    });
   }
 }
 
-// function thats ANIMATES an object to move forward by giving him a new position as argument
-function animateForward(object, newPosition) {
-  object.setAttribute("animation", {
-    property: "position",
-    to: newPosition,
-    dur: 1000,
+function openText(open, id) {
+  const texts = document.querySelectorAll(id);
+  texts.forEach((text) => {
+    text.setAttribute("visible", open);
   });
 }
 </script>
@@ -90,7 +96,7 @@ function animateForward(object, newPosition) {
       useDefaultScene: false;
       wasmUrl: lib/physx.release.wasm;
     "
-    outline
+    bloom
     simple-grab
   >
     <a-assets @loaded="allAssetsLoaded = true">
@@ -113,12 +119,11 @@ function animateForward(object, newPosition) {
     </a-assets>
 
     <template v-if="allAssetsLoaded">
-      <!-- cylinder that looks like a rope -->
-
+      <!-- ROPE -->
       <a-cylinder
         obb-collider
         id="rope"
-        position="0 1.3 -3.3"
+        position="0 1.2 -3.3"
         rotation="90 0 0"
         radius="0.03"
         height="7"
@@ -128,39 +133,89 @@ function animateForward(object, newPosition) {
         clickable
       ></a-cylinder>
 
-      <!-- make a very bright light that looks like its floating right in front of the box -->
+      <!-- PINK SPHERE : CLOTHO -->
       <a-sphere
         id="pink-sphere"
         position="0 1.3 -9.5"
         radius="0.1"
-        color="pink"
-        shader="flat"
+        material="color: pink; emissive: #b52688; emissiveIntensity: 4"
         emit-when-near="event: rope-visibility; distance: 3;"
-        @rope-visibility="ropeVisibility(false)"
+        @rope-visibility="ropeVisibility()"
+        obb-collider
+        @obbcollisionstarted="openText(true, '.pink-text')"
+        @obbcollisionended="openText(false, '.pink-text')"
       >
+        <a-entity
+          class="pink-text"
+          text="align: center; color: pink; value: Clotho"
+          position="0 0.20947 0"
+          visible="false"
+        ></a-entity>
+        <a-entity
+          class="pink-text"
+          text="align: center; value: spins the thread of life"
+          position="0 0.14662 0"
+          scale="0.81 0.81 0.81"
+          visible="false"
+        ></a-entity>
         <a-light type="point" intensity="0.1" color="pink" position="0 0 0">
         </a-light>
       </a-sphere>
+
+      <!-- BLUE SPHERE : LACHESIS -->
       <a-sphere
         id="blue-sphere"
         position="-0.8 1.3 -7.7"
         radius="0.1"
-        color="blue"
-        shader="flat"
+        material="color: blue; emissive: blue; emissiveIntensity: 4"
+        obb-collider
+        @obbcollisionstarted="openText(true, '.blue-text')"
+        @obbcollisionended="openText(false, '.blue-text')"
       >
+        <a-entity
+          class="blue-text"
+          text="align: center; color: blue; value: Lachesis"
+          position="0 0.20947 0"
+          visible="false"
+        ></a-entity>
+        <a-entity
+          class="blue-text"
+          text="align: center; value: measures the thread of life"
+          position="0 0.14662 0"
+          scale="0.81 0.81 0.81"
+          visible="false"
+        ></a-entity>
         <a-light type="point" intensity="0.1" color="blue" position="0 0 0">
         </a-light>
       </a-sphere>
+
+      <!-- PURPLE SPHERE : ATROPOS -->
       <a-sphere
         id="purple-sphere"
         position="0.8 1.3 -7.7"
         radius="0.1"
-        color="purple"
-        shader="flat"
+        material="color: purple; emissive: purple; emissiveIntensity: 4"
+        obb-collider
+        @obbcollisionstarted="openText(true, '.purple-text')"
+        @obbcollisionended="openText(false, '.purple-text')"
       >
+        <a-entity
+          class="purple-text"
+          text="align: center; color: purple; value: Atropos"
+          position="0 0.20947 0"
+          visible="false"
+        ></a-entity>
+        <a-entity
+          class="purple-text"
+          text="align: center; value: cuts the thread of life"
+          position="0 0.14662 0"
+          scale="0.81 0.81 0.81"
+          visible="false"
+        ></a-entity>
         <a-light type="point" intensity="0.1" color="purple" position="0 0 0">
         </a-light>
       </a-sphere>
+
       <!-- The maze -->
       <a-entity
         id="maze"
@@ -169,6 +224,7 @@ function animateForward(object, newPosition) {
         rotation="0 90 0"
         scale="0.5 0.5 0.5"
       ></a-entity>
+
       <!-- The rope bundle -->
       <a-entity
         id="rope-bundle"
@@ -186,6 +242,7 @@ function animateForward(object, newPosition) {
         light="type: point; intensity: 4; color: #FF8141"
         position="0 0.4 -0.9"
       ></a-entity>
+
       <!-- torches -->
       <a-entity
         id="torch-1"
