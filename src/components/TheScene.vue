@@ -141,7 +141,7 @@ function correctAnswer(id) {
       ></a-asset-item>
       <a-asset-item
         id="fog-model"
-        src="assets/models/new_fog.glb"
+        src="assets/models/fluffy_cloud.glb"
       ></a-asset-item>
     </a-assets>
 
@@ -261,7 +261,7 @@ function correctAnswer(id) {
       <a-entity
         id="fog"
         gltf-model="#fog-model"
-        position="0 0 0"
+        position="0.8 1.3 -7.7"
         rotation="0 0 0"
         scale="1 1 1"
       ></a-entity>
