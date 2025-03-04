@@ -55,9 +55,9 @@ function ropeVisibility() {
 }
 
 function animateSpheres() {
-  animateForward("pink-sphere", { x: 0, y: 1.3, z: -7.3 });
-  animateForward("blue-sphere", { x: -0.25, y: 1.3, z: -7 });
-  animateForward("purple-sphere", { x: 0.25, y: 1.3, z: -7 });
+  animateForward("pink", { x: 0, y: 1.3, z: -7.3 });
+  animateForward("blue", { x: -0.25, y: 1.3, z: -7 });
+  animateForward("purple", { x: 0.25, y: 1.3, z: -7 });
 }
 
 function animateForward(id, newPosition) {
@@ -77,6 +77,35 @@ function openText(open, id) {
     text.setAttribute("visible", open);
   });
 }
+
+function wrongAnswer(id) {
+  //turn the sphere red
+  const sphere = document.getElementById(id);
+  if (sphere) {
+    sphere.setAttribute("material", `color: red; emissive: red`);
+  }
+  //wait 2 seconds and turn the color back to blue
+  setTimeout(() => {
+    sphere.setAttribute("material", `color: ${id}; emissive: ${id};`);
+  }, 1000);
+}
+function correctAnswer(id) {
+  //make the sphere more glowy
+  const sphere = document.getElementById(id);
+  if (sphere) {
+    sphere.setAttribute("material", `emissiveIntensity: 6`);
+  }
+
+  //remove purple and blue sphere
+  const purple = document.getElementById("purple");
+  const blue = document.getElementById("blue");
+  if (purple) {
+    purple.remove();
+  }
+  if (blue) {
+    blue.remove();
+  }
+}
 </script>
 
 <template>
@@ -90,12 +119,6 @@ function openText(open, id) {
       overlayElement: ${overlaySelector};
     `"
     xr-mode-ui="XRMode: xr"
-    physx="
-      autoLoad: true;
-      delay: 1000;
-      useDefaultScene: false;
-      wasmUrl: lib/physx.release.wasm;
-    "
     bloom
     simple-grab
   >
@@ -116,6 +139,10 @@ function openText(open, id) {
         id="torch-anim"
         src="assets/models/torch_anim.glb"
       ></a-asset-item>
+      <a-asset-item
+        id="fog-model"
+        src="assets/models/new_fog.glb"
+      ></a-asset-item>
     </a-assets>
 
     <template v-if="allAssetsLoaded">
@@ -135,7 +162,7 @@ function openText(open, id) {
 
       <!-- PINK SPHERE : CLOTHO -->
       <a-sphere
-        id="pink-sphere"
+        id="pink"
         position="0 1.3 -9.5"
         radius="0.1"
         material="color: pink; emissive: #b52688; emissiveIntensity: 4"
@@ -144,6 +171,9 @@ function openText(open, id) {
         obb-collider
         @obbcollisionstarted="openText(true, '.pink-text')"
         @obbcollisionended="openText(false, '.pink-text')"
+        simple-grab
+        @grab="correctAnswer('pink')"
+        clickable
       >
         <a-entity
           class="pink-text"
@@ -164,13 +194,15 @@ function openText(open, id) {
 
       <!-- BLUE SPHERE : LACHESIS -->
       <a-sphere
-        id="blue-sphere"
+        id="blue"
         position="-0.8 1.3 -7.7"
         radius="0.1"
         material="color: blue; emissive: blue; emissiveIntensity: 4"
         obb-collider
         @obbcollisionstarted="openText(true, '.blue-text')"
         @obbcollisionended="openText(false, '.blue-text')"
+        clickable
+        @click="wrongAnswer('blue')"
       >
         <a-entity
           class="blue-text"
@@ -191,13 +223,15 @@ function openText(open, id) {
 
       <!-- PURPLE SPHERE : ATROPOS -->
       <a-sphere
-        id="purple-sphere"
+        id="purple"
         position="0.8 1.3 -7.7"
         radius="0.1"
         material="color: purple; emissive: purple; emissiveIntensity: 4"
         obb-collider
         @obbcollisionstarted="openText(true, '.purple-text')"
         @obbcollisionended="openText(false, '.purple-text')"
+        clickable
+        @click="wrongAnswer('purple')"
       >
         <a-entity
           class="purple-text"
@@ -223,6 +257,13 @@ function openText(open, id) {
         position="0 -1.8 -18.3"
         rotation="0 90 0"
         scale="0.5 0.5 0.5"
+      ></a-entity>
+      <a-entity
+        id="fog"
+        gltf-model="#fog-model"
+        position="0 0 0"
+        rotation="0 0 0"
+        scale="1 1 1"
       ></a-entity>
 
       <!-- The rope bundle -->
