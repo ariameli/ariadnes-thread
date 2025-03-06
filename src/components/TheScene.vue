@@ -258,12 +258,13 @@ function correctAnswer(id) {
         rotation="0 90 0"
         scale="0.5 0.5 0.5"
       ></a-entity>
+
+      <!-- FOG -->
       <a-entity
         id="fog"
-        gltf-model="#fog-model"
-        position="0.8 1.3 -7.7"
-        rotation="0 0 0"
-        scale="1 1 1"
+        gltf-model="assets/models/fluffy_cloud.glb"
+        position="-0.24 0.61 -12.17"
+        scale="3 3 3"
       ></a-entity>
 
       <!-- The rope bundle -->
