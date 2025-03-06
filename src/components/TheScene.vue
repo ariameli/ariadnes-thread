@@ -20,14 +20,14 @@ const allAssetsLoaded = ref(false);
 const ropeIsTouched = ref(false);
 const lightBundleofRope = ref(false);
 
-//after 5 seconds change the lightBundkeofRope to true
 setTimeout(() => {
   lightBundleofRope.value = true;
 }, 5000);
 
-function handleCollision(event, isCollisionStart) {
-  const rope = document.getElementById("rope");
-  if (rope) {
+function handleCollision(event, isCollisionStart, ropeId) {
+  const rope = document.getElementById(ropeId);
+  console.log(event.detail.withEl.id);
+  if (rope && event.detail.withEl.id === "hand-right-collider") {
     rope.setAttribute(
       "material",
       isCollisionStart ? "color: red" : "color: white"
@@ -36,12 +36,25 @@ function handleCollision(event, isCollisionStart) {
   }
 }
 
+//pass 1 or more id's to make them visible or invisible
+function objectVisibility(id, visible) {
+  console.log("hi3");
+  const objects = document.querySelectorAll(id);
+  console.log(objects);
+  objects.forEach((object) => {
+    console.log(object);
+    object.setAttribute("visible", visible);
+  });
+}
+
 function ropeAppears() {
+  console.log("hi");
   const rope = document.getElementById("rope");
   const ropeBundle = document.getElementById("rope-bundle");
-  if (rope) {
-    rope.setAttribute("visible", true);
-    ropeBundle.setAttribute("visible", false);
+  if (rope && ropeBundle) {
+    console.log("hi2");
+    objectVisibility("#rope", true);
+    objectVisibility("#rope-bundle", false);
   }
 }
 
@@ -71,11 +84,16 @@ function animateForward(id, newPosition) {
   }
 }
 
-function openText(open, id) {
-  const texts = document.querySelectorAll(id);
-  texts.forEach((text) => {
-    text.setAttribute("visible", open);
-  });
+function openText(event, open, id) {
+  if (
+    event.detail.withEl.id === "hand-right-collider" ||
+    event.detail.withEl.id === "hand-left-collider"
+  ) {
+    const texts = document.querySelectorAll(id);
+    texts.forEach((text) => {
+      text.setAttribute("visible", open);
+    });
+  }
 }
 
 function wrongAnswer(id) {
@@ -92,8 +110,13 @@ function wrongAnswer(id) {
 function correctAnswer(id) {
   //make the sphere more glowy
   const sphere = document.getElementById(id);
+  const rope = document.getElementById("rope-1");
   if (sphere) {
     sphere.setAttribute("material", `emissiveIntensity: 6`);
+  }
+
+  if (rope) {
+    rope.setAttribute("visible", true);
   }
 
   //remove purple and blue sphere
@@ -106,18 +129,17 @@ function correctAnswer(id) {
     blue.remove();
   }
 }
+
+function droppedSphere() {
+  objectVisibility(".fog", false);
+  objectVisibility("#rope-1", false);
+}
 </script>
 
 <template>
   <a-scene
     stats
     background="color: black;"
-    :webxr="`
-      requiredFeatures: local-floor;
-      referenceSpaceType: local-floor;
-      optionalFeatures: dom-overlay;
-      overlayElement: ${overlaySelector};
-    `"
     xr-mode-ui="XRMode: xr"
     bloom
     simple-grab
@@ -146,6 +168,24 @@ function correctAnswer(id) {
     </a-assets>
 
     <template v-if="allAssetsLoaded">
+      <!-- drop zone -->
+      <a-entity
+        id="drop-zone-left"
+        geometry="primitive: sphere; phiLength: 180; radius: 0.52; thetaLength: 90;"
+        material="color: red; side: double"
+        position="0 1.3 -12.6"
+        rotation="90 0 0"
+        clickable
+      ></a-entity>
+      <a-entity
+        id="drop-zone-left-spot"
+        position="0 1.3 -12.3"
+        rotation="90 0 180"
+        listen-to="target: #drop-zone-left;"
+        simple-grab-drop-zone
+        @drop="droppedSphere()"
+      ></a-entity>
+
       <!-- ROPE -->
       <a-cylinder
         obb-collider
@@ -154,9 +194,21 @@ function correctAnswer(id) {
         rotation="90 0 0"
         radius="0.03"
         height="7"
-        @obbcollisionstarted="handleCollision($event, true)"
-        @obbcollisionended="handleCollision($event, false)"
-        visible="true"
+        @obbcollisionstarted="handleCollision($event, true, 'rope')"
+        @obbcollisionended="handleCollision($event, false, 'rope')"
+        visible="false"
+        clickable
+      ></a-cylinder>
+      <a-cylinder
+        obb-collider
+        id="rope-1"
+        position="0 1.2 -7.3"
+        rotation="90 0 0"
+        radius="0.03"
+        height="7.2"
+        @obbcollisionstarted="handleCollision($event, true, 'rope-1')"
+        @obbcollisionended="handleCollision($event, false, 'rope-1')"
+        visible="false"
         clickable
       ></a-cylinder>
 
@@ -169,8 +221,8 @@ function correctAnswer(id) {
         emit-when-near="event: rope-visibility; distance: 3;"
         @rope-visibility="ropeVisibility()"
         obb-collider
-        @obbcollisionstarted="openText(true, '.pink-text')"
-        @obbcollisionended="openText(false, '.pink-text')"
+        @obbcollisionstarted="openText($event, true, '.pink-text')"
+        @obbcollisionended="openText($event, false, '.pink-text')"
         simple-grab
         @grab="correctAnswer('pink')"
         clickable
@@ -260,8 +312,18 @@ function correctAnswer(id) {
       ></a-entity>
 
       <!-- FOG -->
-      <a-entity id="fog" gltf-model="assets/models/fluffy_cloud.glb" position="-0.63 -0.66 -13.98" scale="4 4 4"></a-entity>
-      <a-entity id="fog-2" gltf-model="assets/models/fluffy_cloud.glb" position="0.41 0.01 -13.98" scale="4 4 4"></a-entity>
+      <a-entity
+        class="fog"
+        gltf-model="assets/models/fluffy_cloud.glb"
+        position="-0.63 -0.66 -13.98"
+        scale="4 4 4"
+      ></a-entity>
+      <a-entity
+        class="fog"
+        gltf-model="assets/models/fluffy_cloud.glb"
+        position="0.41 0.01 -13.98"
+        scale="4 4 4"
+      ></a-entity>
 
       <!-- The rope bundle -->
       <a-entity
@@ -271,7 +333,7 @@ function correctAnswer(id) {
         rotation="0 0 0"
         scale="1.8 1.8 1.8"
         visible="true"
-        @obbcollisionstarted="ropeAppears()"
+        @click="ropeAppears()"
         obb-collider
         clickable
       ></a-entity>
