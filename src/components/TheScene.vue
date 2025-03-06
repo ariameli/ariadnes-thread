@@ -260,12 +260,8 @@ function correctAnswer(id) {
       ></a-entity>
 
       <!-- FOG -->
-      <a-entity
-        id="fog"
-        gltf-model="assets/models/fluffy_cloud.glb"
-        position="-0.24 0.61 -12.17"
-        scale="3 3 3"
-      ></a-entity>
+      <a-entity id="fog" gltf-model="assets/models/fluffy_cloud.glb" position="-0.63 -0.66 -13.98" scale="4 4 4"></a-entity>
+      <a-entity id="fog-2" gltf-model="assets/models/fluffy_cloud.glb" position="0.41 0.01 -13.98" scale="4 4 4"></a-entity>
 
       <!-- The rope bundle -->
       <a-entity
