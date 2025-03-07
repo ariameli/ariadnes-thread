@@ -30,9 +30,14 @@
 
 ### 3D models
 
-- **Main room** – [VR Gallery](https://sketchfab.com/3d-models/vr-gallery-1ac32ed62fdf424498acc146fad31f7e) by [Maxim Mavrichev](https://sketchfab.com/mvrc.art) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-- **3D physic room** – [3d_gallery_for_vr_projects](https://sketchfab.com/3d-models/3d-gallery-for-vr-projects-68f77ed8558c4bd59e0a13e2cc9d1fd1) by [tekuto1s](https://sketchfab.com/tekuto1s) is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
-- **Labyrinth** - [Minoic Labyrinth](https://skfb.ly/oKKTy) by Bruno Macchioni is licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+- [**Maze**](https://skfb.ly/6ttXp) by victor.darras is licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+-  **[Bull Head Sculpt](https://skfb.ly/n5lj3h0)** - by FushiNoRyuu is licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+- **[Golden coin](https://skfb.ly/oZIPw)**  by Kae Games Official is licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+- **[Rope Knots](https://skfb.ly/6pIRz)**  by aneeqayounas is licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+- **[Non-textured burning torch (2)](https://skfb.ly/o77vy))** by Nortenko Dmytro is licensed under  [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+- **[Rope LowPoly Model With Texture](https://skfb.ly/oTAnA)**  by Md.saifulislam is licensed under [CC BY 4.0](http://creativecommons.org/licenses/by/4.0/).
+
+
 
 ---
 
