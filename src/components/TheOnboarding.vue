@@ -22,11 +22,24 @@ function enterScene() {
 <template>
   <div id="onboarding" v-if="showOnboarding">
     <div>
-      <h1>A-Frame + Vite + Vue Boilerplate</h1>
+      <h1>Ariadne's Thread</h1>
+      <p>
+        You are <strong>Theseus</strong>, trapped within the endless corridors
+        of the Labyrinth. Deep within, the Minotaur lurks. But you are not
+        alone. Ariadne’s voice will guide you. To escape, follow the golden
+        thread and solve the Labyrinth’s mysteries. But be warned: the Minotaur
+        is always watching.
+      </p>
       <p v-if="!loaded">loading...</p>
-      <button v-if="loaded" @click="enterScene()">Enter scene</button>
+      <button v-if="loaded" @click="enterScene()">Enter the Labyrinth</button>
       <div class="licences">
         <section>
+          <h4>How to play</h4>
+          <ul>
+            <li>Follow the thread – It will show the way.</li>
+            <li>Solve the puzzles – Only wisdom will open the path.</li>
+            <li>Trust Ariadne – Her voice will guide you.</li>
+          </ul>
           <h4>Movement modes support</h4>
           <ul>
             <li>
@@ -38,8 +51,8 @@ function enterScene() {
               backward + Gaze cursor for click
             </li>
             <li>
-              VR/AR – walk + Teleport (Grip for grab and laser for click) + Gaze
-              cursor for click
+              VR/AR – walk + touch rope and drag to move forward + Gaze cursor
+              for click
             </li>
           </ul>
         </section>
@@ -58,19 +71,6 @@ function enterScene() {
           <dt>
             <a href="https://github.com/c-frame/aframe-extras" target="_blank"
               >aframe-extras controls and animation-mixer</a
-            >
-          </dt>
-          <dd>
-            <a
-              href="https://github.com/c-frame/aframe-extras/blob/master/LICENSE"
-              target="_blank"
-              >MIT License</a
-            >
-          </dd>
-
-          <dt>
-            <a href="https://github.com/c-frame/physx" target="_blank"
-              >aframe physx</a
             >
           </dt>
           <dd>
@@ -121,38 +121,10 @@ function enterScene() {
           <dd>By Ada Rose Cannon under MIT License</dd>
 
           <dt>
-            <a
-              href="https://sketchfab.com/3d-models/vr-gallery-1ac32ed62fdf424498acc146fad31f7e"
-              target="_blank"
-              >VR Gallery</a
-            >
+            <a href="https://skfb.ly/NK7C" target="_blank">Cloud Test</a>
           </dt>
           <dd>
-            by
-            <a href="https://sketchfab.com/mvrc.art" target="_blank"
-              >Maxim Mavrichev</a
-            >
-            under
-            <a
-              href="https://creativecommons.org/licenses/by/4.0/"
-              target="_blank"
-              >CC BY 4.0</a
-            >
-          </dd>
-
-          <dt>
-            <a
-              href="https://sketchfab.com/3d-models/3d-gallery-for-vr-projects-68f77ed8558c4bd59e0a13e2cc9d1fd1"
-              target="_blank"
-              >Physic room model</a
-            >
-          </dt>
-          <dd>
-            by
-            <a href="https://sketchfab.com/tekuto1s" target="_blank"
-              >tekuto1s</a
-            >
-            under
+            by Andrea Marziano under
             <a
               href="https://creativecommons.org/licenses/by/4.0/"
               target="_blank"
@@ -160,12 +132,71 @@ function enterScene() {
             >
           </dd>
           <dt>
-            <a href="https://skfb.ly/oKKTy" target="_blank"
-              >Minoic Labyrinth model</a
+            <a href="https://skfb.ly/n5lj3h0" target="_blank"
+              >Bull Head Sculpt</a
             >
           </dt>
           <dd>
-            by Bruno Macchioni under
+            by FushiNoRyuu under
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              >CC BY 4.0</a
+            >
+          </dd>
+          <dt>
+            <a href="https://skfb.ly/oZIPw" target="_blank">Golden coin</a>
+          </dt>
+          <dd>
+            by Kae Games Official under
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              >CC BY 4.0</a
+            >
+          </dd>
+          <dt>
+            <a href="https://skfb.ly/6pIRz" target="_blank">Rope Knots</a>
+          </dt>
+          <dd>
+            by aneeqayounas under
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              >CC BY 4.0</a
+            >
+          </dd>
+          <dt>
+            <a href="https://skfb.ly/o77vy" target="_blank"
+              >Non-textured burning torch (2)</a
+            >
+          </dt>
+          <dd>
+            by Nortenko Dmytro under
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              >CC BY 4.0</a
+            >
+          </dd>
+          <dt>
+            <a href="https://skfb.ly/oTAnA" target="_blank"
+              >Rope LowPoly Model With Texture</a
+            >
+          </dt>
+          <dd>
+            by Md.saifulislam under
+            <a
+              href="https://creativecommons.org/licenses/by/4.0/"
+              target="_blank"
+              >CC BY 4.0</a
+            >
+          </dd>
+          <dt>
+            <a href="https://poly.pizza/m/CkF171SeTV" target="_blank">Wall</a>
+          </dt>
+          <dd>
+            by Quaternius under
             <a
               href="https://creativecommons.org/licenses/by/4.0/"
               target="_blank"
@@ -206,7 +237,7 @@ a {
   position: absolute;
   top: 0;
   left: 0;
-  background-color: #333;
+  background-color: #351616;
   color: #ccc;
   width: 100vw;
   height: 100vh;

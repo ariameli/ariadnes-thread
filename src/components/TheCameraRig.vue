@@ -5,10 +5,11 @@ import "../aframe/simple-navmesh-constraint.js";
 import "../aframe/blink-controls.js";
 import "../aframe/physx-grab.js";
 import "../aframe/track-me.js";
-import { useTemplateRef, watch, onMounted } from "vue";
 
 const props = defineProps({
   collided: Boolean,
+  collidedLeft: Boolean,
+  collidedRight: Boolean,
 });
 </script>
 
@@ -49,13 +50,13 @@ const props = defineProps({
           snapTurn: false;
         "
       position="0 1.5 0"
-      physx-grab
     >
       <a-sphere
+        :track-me="`target: #camera-rig; enable: ${collidedLeft};`"
+        obb-collider
         id="hand-left-collider"
         radius="0.02"
         visible="false"
-        physx-body="type: kinematic; emitCollisionEvents: true"
       >
       </a-sphere>
     </a-entity>
@@ -66,15 +67,13 @@ const props = defineProps({
       laser-controls="hand: right"
       raycaster="far: 4; objects: [clickable]; showLine: true;"
       position="0 1.5 0"
-      physx-grab
     >
       <a-sphere
-        :track-me="`target: #camera-rig; enable: ${collided}`"
+        :track-me="`target: #camera-rig; enable: ${collidedRight};`"
         obb-collider
         id="hand-right-collider"
         radius="0.02"
         visible="true"
-        physx-body="type: kinematic; emitCollisionEvents: true"
       >
       </a-sphere>
     </a-entity>
