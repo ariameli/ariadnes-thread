@@ -1,23 +1,16 @@
-<p align="center">
-    <img src="./logo.svg" alt="VAV Logo" align="center"/>
-</p>
-<h1 align="center">Vue + A-Frame + Vite boilerplate</h1>
+<h1 align="center">Ariadne's Thread</h1>
 
-> A boilerplate for A-Frame 1.7, Vue 3.5 and Vite 5.4
+You are <strong>Theseus</strong>, trapped within the endless corridors
+        of the Labyrinth. Deep within, the Minotaur lurks. But you are not
+        alone. Ariadne’s voice will guide you. To escape, follow the golden
+        thread and solve the Labyrinth’s mysteries. But be warned: the Minotaur
+        is always watching.
 
-![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D)
-![A-Frame](https://img.shields.io/badge/A%E2%80%93Frame-1.7-brightgreen?style=for-the-badge&labelColor=%23ef2d5e&color=%23ef2d5e)
-![Threejs](https://img.shields.io/badge/threejs-black?style=for-the-badge&logo=three.js&logoColor=white)
-![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)
-
-### [>> DEMO <<](https://onivers.com/aframe-vue-boilerplate/)
-
-## Included in the boilerplate
+## Included 
 
 ### Libs and components
 
 - [aframe-extras](https://github.com/c-frame/aframe-extras) (MIT License)
-- [aframe physx](https://github.com/c-frame/physx) (MIT License)
 - [aframe-blink-controls](https://github.com/jure/aframe-blink-controls) (MIT License)
 - [aframe-multi-camera](https://github.com/diarmidmackenzie/aframe-multi-camera/) (MIT License)
 - [simple-navmesh-constraint](https://github.com/AdaRoseCannon/aframe-xr-boilerplate) (MIT Licence)
