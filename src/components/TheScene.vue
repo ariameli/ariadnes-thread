@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch, onMounted } from "vue";
+import { ref, watch, onMounted, defineEmits } from "vue";
 
 import TheCameraRig from "./TheCameraRig.vue";
 import TheRope from "./TheRope.vue";
@@ -19,8 +19,11 @@ defineProps({
   overlaySelector: String,
 });
 
+const emit = defineEmits(["game-finished"]);
+
+const gameFinished = ref(false);
 const allAssetsLoaded = ref(false);
-// const ropeIsTouched = ref(false);
+
 const ropeIsTouchedByRight = ref(false);
 const ropeIsTouchedByLeft = ref(false);
 const lightBundleofRope = ref(false);
@@ -173,6 +176,7 @@ function playSound(id) {
 
 function endGame() {
   playSound("end");
+  emit("game-finished");
   console.log("Game ended.");
   if (document.querySelector("a-scene").is("vr-mode")) {
     document.querySelector("a-scene").exitVR();
@@ -587,6 +591,5 @@ function endGame() {
       :collidedLeft="ropeIsTouchedByLeft"
       :collidedRight="ropeIsTouchedByRight"
     />
-    <!-- <TheCameraRig :collided="ropeIsTouched" /> -->
   </a-scene>
 </template>

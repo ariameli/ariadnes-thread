@@ -3,9 +3,11 @@ import { ref } from "vue";
 import TheOnboarding from "./components/TheOnboarding.vue";
 import TheOverlay from "./components/TheOverlay.vue";
 import TheScene from "./components/TheScene.vue";
+import EndScreen from "./components/EndScreen.vue";
 
 const scale = ref(1);
 const loaded = ref(false);
+const gameFinished = ref(false);
 </script>
 
 <template>
@@ -19,5 +21,8 @@ const loaded = ref(false);
     :scale="scale"
     overlay-selector="#overlay"
     @loaded="loaded = true"
+    @game-finished="gameFinished = true"
   />
+
+  <EndScreen v-if="gameFinished" />
 </template>
